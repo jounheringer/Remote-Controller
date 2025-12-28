@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.KeyboardReturn
 import androidx.compose.material.icons.automirrored.rounded.VolumeOff
 import androidx.compose.material.icons.automirrored.rounded.VolumeUp
 import androidx.compose.material.icons.filled.PowerSettingsNew
@@ -26,6 +27,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.DensityMedium
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.KeyboardReturn
 import androidx.compose.material.icons.rounded.Numbers
 import androidx.compose.material.icons.rounded.Output
 import androidx.compose.material.icons.rounded.Remove
@@ -92,7 +94,7 @@ fun RemoteControllerUI() {
                 .padding(16.dp)
         )
         {
-            val (powerButton, selectButton, volume, mute, channel, options) = createRefs()
+            val (powerButton, selectButton, volume, mute, channel, options, returnButton) = createRefs()
 
 
             RemoteControllerPowerButton(
@@ -161,6 +163,18 @@ fun RemoteControllerUI() {
                 onPlus = { TODO() },
                 onMinus = { TODO() }
             )
+
+            Button(
+                modifier = Modifier.constrainAs(returnButton) {
+                    top.linkTo(channel.bottom, margin = 8.dp)
+                    end.linkTo(parent.end)
+                    start.linkTo(channel.start)
+                },
+                onClick = { TODO() },
+                colors = ButtonDefaults.buttonColors(containerColor = commonColor, contentColor = Color.Black)
+            ) {
+                Icon(imageVector = Icons.AutoMirrored.Rounded.KeyboardReturn, contentDescription = "Return")
+            }
 
         }
     }
