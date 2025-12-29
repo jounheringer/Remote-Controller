@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toOffset
 import com.reringuy.remotecontroller.ui.screens.calculateNewAngle
-import com.reringuy.remotecontroller.utils.Direction
+import com.reringuy.remotecontroller.utils.IRCommand
 
 @Composable
 fun RemoteControllerSelectButton(
     modifier: Modifier,
-    onMove: (Direction) -> Unit,
+    onMove: (IRCommand) -> Unit,
     onSelect: () -> Unit,
 ) {
     val textMeasurer = rememberTextMeasurer()
@@ -94,23 +94,23 @@ fun RemoteControllerSelectButton(
 
                         when (newAngle) {
                             in 225f..315f -> {
-                                onMove(Direction.UP)
+                                onMove(IRCommand.UP)
                             }
 
                             in 315f..360f -> {
-                                onMove(Direction.RIGHT)
+                                onMove(IRCommand.RIGHT)
                             }
 
                             in 0f..45f -> {
-                                onMove(Direction.RIGHT)
+                                onMove(IRCommand.RIGHT)
                             }
 
                             in 45f..135f -> {
-                                onMove(Direction.DOWN)
+                                onMove(IRCommand.DOWN)
                             }
 
                             in 135f..225f -> {
-                                onMove(Direction.LEFT)
+                                onMove(IRCommand.LEFT)
                             }
                         }
                     }

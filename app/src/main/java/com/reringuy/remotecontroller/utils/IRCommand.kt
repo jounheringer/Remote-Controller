@@ -1,6 +1,6 @@
 package com.reringuy.remotecontroller.utils
 
-enum class Direction {
+enum class IRCommand {
     RIGHT,
     LEFT,
     UP,

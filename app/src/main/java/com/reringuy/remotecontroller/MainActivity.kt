@@ -1,26 +1,37 @@
 package com.reringuy.remotecontroller
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.reringuy.remotecontroller.data.IrTransmitter
+import com.reringuy.remotecontroller.presenter.RemoteControllerContract
+import com.reringuy.remotecontroller.presenter.RemoteControllerPresenter
+import com.reringuy.remotecontroller.ui.screens.RemoteControllerUI
 import com.reringuy.remotecontroller.ui.theme.RemoteControllerTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), RemoteControllerContract.View {
+
+    lateinit var presenter: RemoteControllerPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        presenter = RemoteControllerPresenter(
+            this,
+            IrTransmitter(this)
+        )
+
         enableEdgeToEdge()
         setContent {
             RemoteControllerTheme {
-
+                RemoteControllerUI()
             }
         }
+    }
+
+    override fun irNotAvailable() {
+        Toast.makeText(this, "IR Not Available", Toast.LENGTH_SHORT).show()
     }
 }
