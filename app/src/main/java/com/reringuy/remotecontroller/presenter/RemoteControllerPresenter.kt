@@ -8,7 +8,11 @@ class RemoteControllerPresenter(
     private val transmitter: IrTransmitter
 ) : RemoteControllerContract.Presenter {
     override fun onCommand(irCommand: IRCommand) {
-        TODO("Not yet implemented")
+        if (!transmitter.hasIrEmitter())
+            view.irNotAvailable()
+        else{
+            transmitter.send(irCommand.irCode)
+        }
     }
 
     override fun onDestroy() {
