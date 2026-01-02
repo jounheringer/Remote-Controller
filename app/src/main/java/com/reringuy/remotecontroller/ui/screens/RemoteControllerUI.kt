@@ -3,10 +3,13 @@ package com.reringuy.remotecontroller.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardReturn
@@ -23,7 +26,6 @@ import androidx.compose.material.icons.rounded.Tv
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,96 +45,103 @@ val commonColor = Color.Gray
 
 @Composable
 fun RemoteControllerUI() {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+    ConstraintLayout(
+        modifier = Modifier.fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
+            .padding(16.dp)
+    )
+    {
+        val (powerButton, selectButton, volume, mute, channel, options, returnButton) = createRefs()
+
+
+        RemoteControllerPowerButton(
+            modifier = Modifier.constrainAs(powerButton) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+            },
+            onClick = { }
         )
-        {
-            val (powerButton, selectButton, volume, mute, channel, options, returnButton) = createRefs()
 
-
-            RemoteControllerPowerButton(
-                modifier = Modifier.constrainAs(powerButton) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                },
-                onClick = { TODO() }
-            )
-
-            RemoteControllerOptionsRow(
-                modifier = Modifier.constrainAs(options) {
-                    bottom.linkTo(selectButton.top, margin = 48.dp)
-                    end.linkTo(parent.end)
-                    start.linkTo(parent.start)
-                }
-            )
-
-            RemoteControllerSelectButton(
-                modifier = Modifier.constrainAs(selectButton) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    end.linkTo(parent.end)
-                    start.linkTo(parent.start)
-                },
-                onMove = { TODO() },
-                onSelect = { TODO() }
-            )
-
-            GenericColumnButton(
-                modifier = Modifier.constrainAs(volume) {
-                    end.linkTo(selectButton.start)
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                },
-                icon = Icons.AutoMirrored.Rounded.VolumeUp,
-                plusIcon = Icons.Rounded.Add,
-                minusIcon = Icons.Rounded.Remove,
-                onPlus = { TODO() },
-                onMinus = { TODO() }
-            )
-
-            Button(
-                modifier = Modifier.constrainAs(mute) {
-                    top.linkTo(volume.bottom, margin = 8.dp)
-                    start.linkTo(volume.start)
-                    end.linkTo(volume.end)
-                },
-                onClick = { TODO() },
-                colors = ButtonDefaults.buttonColors(containerColor = commonColor, contentColor = Color.Black)
-            ) {
-                Icon(imageVector = Icons.AutoMirrored.Rounded.VolumeOff, contentDescription = "Mute")
+        RemoteControllerOptionsRow(
+            modifier = Modifier.constrainAs(options) {
+                bottom.linkTo(selectButton.top, margin = 48.dp)
+                end.linkTo(parent.end)
+                start.linkTo(parent.start)
             }
+        )
 
-            GenericColumnButton(
-                modifier = Modifier.constrainAs(channel) {
-                    start.linkTo(selectButton.end)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                },
-                icon = Icons.Rounded.Tv,
-                plusIcon = Icons.Rounded.KeyboardArrowUp,
-                minusIcon = Icons.Rounded.KeyboardArrowDown,
-                onPlus = { TODO() },
-                onMinus = { TODO() }
+        RemoteControllerSelectButton(
+            modifier = Modifier.constrainAs(selectButton) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                end.linkTo(parent.end)
+                start.linkTo(parent.start)
+            },
+            onMove = { },
+            onSelect = { }
+        )
+
+        GenericColumnButton(
+            modifier = Modifier.constrainAs(volume) {
+                end.linkTo(selectButton.start)
+                start.linkTo(parent.start)
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+            },
+            icon = Icons.AutoMirrored.Rounded.VolumeUp,
+            plusIcon = Icons.Rounded.Add,
+            minusIcon = Icons.Rounded.Remove,
+            onPlus = { },
+            onMinus = { }
+        )
+
+        Button(
+            modifier = Modifier.constrainAs(mute) {
+                top.linkTo(volume.bottom, margin = 8.dp)
+                start.linkTo(volume.start)
+                end.linkTo(volume.end)
+            },
+            onClick = { },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = commonColor,
+                contentColor = Color.Black
             )
-
-            Button(
-                modifier = Modifier.constrainAs(returnButton) {
-                    top.linkTo(channel.bottom, margin = 8.dp)
-                    end.linkTo(parent.end)
-                    start.linkTo(channel.start)
-                },
-                onClick = { TODO() },
-                colors = ButtonDefaults.buttonColors(containerColor = commonColor, contentColor = Color.Black)
-            ) {
-                Icon(imageVector = Icons.AutoMirrored.Rounded.KeyboardReturn, contentDescription = "Return")
-            }
-
+        ) {
+            Icon(imageVector = Icons.AutoMirrored.Rounded.VolumeOff, contentDescription = "Mute")
         }
+
+        GenericColumnButton(
+            modifier = Modifier.constrainAs(channel) {
+                start.linkTo(selectButton.end)
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+            },
+            icon = Icons.Rounded.Tv,
+            plusIcon = Icons.Rounded.KeyboardArrowUp,
+            minusIcon = Icons.Rounded.KeyboardArrowDown,
+            onPlus = { },
+            onMinus = { }
+        )
+
+        Button(
+            modifier = Modifier.constrainAs(returnButton) {
+                top.linkTo(channel.bottom, margin = 8.dp)
+                end.linkTo(parent.end)
+                start.linkTo(channel.start)
+            },
+            onClick = { },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = commonColor,
+                contentColor = Color.Black
+            )
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Rounded.KeyboardReturn,
+                contentDescription = "Return"
+            )
+        }
+
     }
 }
 
@@ -143,8 +152,8 @@ fun RemoteControllerOptionsRow(modifier: Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        RemoteControllerOption(icon = Icons.Rounded.Output, onClick = { TODO() })
-        RemoteControllerOption(icon = Icons.Rounded.DensityMedium, onClick = { TODO() })
+        RemoteControllerOption(icon = Icons.Rounded.Output, onClick = { })
+        RemoteControllerOption(icon = Icons.Rounded.DensityMedium, onClick = { })
     }
 }
 
