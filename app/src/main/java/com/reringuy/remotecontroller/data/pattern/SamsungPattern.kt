@@ -10,7 +10,7 @@ fun samsungPatternConverter(irCode: IrCode): IntArray {
     for (i in 0 until irCode.bits) {
         pattern += 560
 
-        val bit = (irCode.data.toLong() shr i) and 1
+        val bit = (irCode.data shr i) and 1
 
         pattern += if (bit == 1L) 1600 else 560
     }

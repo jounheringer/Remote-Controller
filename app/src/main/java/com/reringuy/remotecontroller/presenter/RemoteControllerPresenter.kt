@@ -1,5 +1,6 @@
 package com.reringuy.remotecontroller.presenter
 
+import android.util.Log
 import com.reringuy.remotecontroller.data.IrTransmitter
 import com.reringuy.remotecontroller.utils.IRCommand
 
@@ -11,6 +12,7 @@ class RemoteControllerPresenter(
         if (!transmitter.hasIrEmitter())
             view.irNotAvailable()
         else{
+            Log.d("IR", "Sending ${irCommand.name}")
             transmitter.send(irCommand.irCode)
         }
     }

@@ -38,19 +38,30 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.reringuy.remotecontroller.ui.components.GenericColumnButton
 import com.reringuy.remotecontroller.ui.components.RemoteControllerSelectButton
 import com.reringuy.remotecontroller.ui.theme.RemoteControllerTheme
+import com.reringuy.remotecontroller.utils.IRCommand
 import kotlin.math.atan2
 import kotlin.math.roundToInt
 
 val commonColor = Color.Gray
 
 @Composable
-fun RemoteControllerUI() {
+fun RemoteControllerUI(
+    onTriggerPower: () -> Unit,
+    onMove: (IRCommand) -> Unit,
+    onSelect: () -> Unit,
+    onVolumeUp: () -> Unit,
+    onVolumeDown: () -> Unit,
+    onMute: () -> Unit,
+    onChannelPlus: () -> Unit,
+    onChannelMinus: () -> Unit,
+    onReturn: () -> Unit
+) {
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .windowInsetsPadding(WindowInsets.systemBars)
             .padding(16.dp)
-    )
-    {
+    ) {
         val (powerButton, selectButton, volume, mute, channel, options, returnButton) = createRefs()
 
 
@@ -59,7 +70,7 @@ fun RemoteControllerUI() {
                 top.linkTo(parent.top)
                 start.linkTo(parent.start)
             },
-            onClick = { }
+            onClick = onTriggerPower
         )
 
         RemoteControllerOptionsRow(
@@ -77,8 +88,8 @@ fun RemoteControllerUI() {
                 end.linkTo(parent.end)
                 start.linkTo(parent.start)
             },
-            onMove = { },
-            onSelect = { }
+            onMove = onMove,
+            onSelect = onSelect
         )
 
         GenericColumnButton(
@@ -91,8 +102,8 @@ fun RemoteControllerUI() {
             icon = Icons.AutoMirrored.Rounded.VolumeUp,
             plusIcon = Icons.Rounded.Add,
             minusIcon = Icons.Rounded.Remove,
-            onPlus = { },
-            onMinus = { }
+            onPlus = onVolumeUp,
+            onMinus = onVolumeDown
         )
 
         Button(
@@ -101,7 +112,7 @@ fun RemoteControllerUI() {
                 start.linkTo(volume.start)
                 end.linkTo(volume.end)
             },
-            onClick = { },
+            onClick = onMute,
             colors = ButtonDefaults.buttonColors(
                 containerColor = commonColor,
                 contentColor = Color.Black
@@ -120,8 +131,8 @@ fun RemoteControllerUI() {
             icon = Icons.Rounded.Tv,
             plusIcon = Icons.Rounded.KeyboardArrowUp,
             minusIcon = Icons.Rounded.KeyboardArrowDown,
-            onPlus = { },
-            onMinus = { }
+            onPlus = onChannelPlus,
+            onMinus = onChannelMinus
         )
 
         Button(
@@ -130,7 +141,7 @@ fun RemoteControllerUI() {
                 end.linkTo(parent.end)
                 start.linkTo(channel.start)
             },
-            onClick = { },
+            onClick = onReturn,
             colors = ButtonDefaults.buttonColors(
                 containerColor = commonColor,
                 contentColor = Color.Black
@@ -141,7 +152,6 @@ fun RemoteControllerUI() {
                 contentDescription = "Return"
             )
         }
-
     }
 }
 
@@ -184,7 +194,17 @@ fun RemoteControllerPowerButton(modifier: Modifier, onClick: () -> Unit) {
 @Composable
 fun RemoteControllerUIPreview() {
     RemoteControllerTheme {
-        RemoteControllerUI()
+        RemoteControllerUI(
+            onTriggerPower = {  },
+            onMove = {  },
+            onSelect = {  },
+            onVolumeUp = {  },
+            onVolumeDown = {  },
+            onMute = {  },
+            onChannelPlus = {  },
+            onChannelMinus = {  },
+            onReturn = {  }
+        )
     }
 }
 

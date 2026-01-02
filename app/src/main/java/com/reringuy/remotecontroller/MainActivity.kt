@@ -10,6 +10,7 @@ import com.reringuy.remotecontroller.presenter.RemoteControllerContract
 import com.reringuy.remotecontroller.presenter.RemoteControllerPresenter
 import com.reringuy.remotecontroller.ui.screens.RemoteControllerUI
 import com.reringuy.remotecontroller.ui.theme.RemoteControllerTheme
+import com.reringuy.remotecontroller.utils.IRCommand
 
 class MainActivity : ComponentActivity(), RemoteControllerContract.View {
 
@@ -26,7 +27,17 @@ class MainActivity : ComponentActivity(), RemoteControllerContract.View {
         enableEdgeToEdge()
         setContent {
             RemoteControllerTheme {
-                RemoteControllerUI()
+                RemoteControllerUI(
+                    onTriggerPower = { presenter.onCommand(IRCommand.ON_OFF) },
+                    onMove = presenter::onCommand,
+                    onSelect = { presenter.onCommand(IRCommand.SELECT) },
+                    onVolumeUp = { presenter.onCommand(IRCommand.VOL_PLUS) },
+                    onVolumeDown = { presenter.onCommand(IRCommand.VOL_MINUS) },
+                    onMute = { presenter.onCommand(IRCommand.MUTE) },
+                    onChannelPlus = { presenter.onCommand(IRCommand.CH_PLUS) },
+                    onChannelMinus = { presenter.onCommand(IRCommand.CH_MINUS) },
+                    onReturn = { presenter.onCommand(IRCommand.RETURN) }
+                )
             }
         }
     }
